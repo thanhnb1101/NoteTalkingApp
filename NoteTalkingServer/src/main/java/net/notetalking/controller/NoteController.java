@@ -28,7 +28,7 @@ public class NoteController extends BaseController {
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public ResponseEntity delete(@RequestParam long id) {
 		return response(noteService.delete(id));
 	}
@@ -42,6 +42,12 @@ public class NoteController extends BaseController {
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ResponseEntity<Note> update(@RequestBody Note request) {
 		Note response = noteService.update(request);
+		return new ResponseEntity<Note>(response, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public ResponseEntity detail(@RequestParam long id) throws Exception {
+		Note response = noteService.getById(id);
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
 	}
 }

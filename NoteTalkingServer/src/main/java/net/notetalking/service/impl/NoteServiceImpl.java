@@ -65,7 +65,7 @@ public class NoteServiceImpl implements NoteService {
 		} else {
 			oldNote.setTitle(note.getTitle());
 			oldNote.setContent(note.getContent());
-			return noteRepository.save(note);
+			return noteRepository.save(oldNote);
 		}
 	}
 
