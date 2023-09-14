@@ -71,4 +71,10 @@ public class BaseController{
 		return responseList(responseList, paging);
 	}
 	
+	public ResponseEntity responseListNoPaging(List<?> responseList) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(ConstantUtils.DATA_LIST, responseList);
+		return response(map);
+	}
+	
 }

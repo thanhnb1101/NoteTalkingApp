@@ -6,9 +6,13 @@ import net.notetalking.model.Note;
 
 
 public interface NoteService {
-	Note save(Note note);
+	Note create(Note note);
 
 	Note getById(long id);
 	
-	List<Note> getAllByUserId(long userId);
+	List<Note> getAllByUserId();
+	
+	boolean delete(long id);
+	
+	Note update(Note note);
 }
