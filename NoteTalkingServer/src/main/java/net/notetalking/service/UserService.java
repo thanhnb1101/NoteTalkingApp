@@ -11,4 +11,5 @@ public interface UserService {
 	User getByUserName(String userName);
 	
 	User register(User user) throws Exception;
+	
 }

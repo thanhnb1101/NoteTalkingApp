@@ -8,4 +8,6 @@ public class ConstantUtils {
 	public static final String SUCCESS = "success";
 	public static final String ERROR_NOT_SPECIFIC = "Error.";
 	public static final String ERROR_AT_FORM = "Error! Please check form fields again.";
+	
+	public static final String DATA_LIST = "list";
 }
