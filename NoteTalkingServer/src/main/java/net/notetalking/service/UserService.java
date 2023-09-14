@@ -9,4 +9,6 @@ public interface UserService {
 	User getById(long id);
 	
 	User getByUserName(String userName);
+	
+	User register(User user) throws Exception;
 }

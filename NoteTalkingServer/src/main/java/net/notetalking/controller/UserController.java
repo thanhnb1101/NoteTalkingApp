@@ -17,8 +17,8 @@ public class UserController {
 	UserService userService;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<User> register(@RequestBody User request) {
-		User response = userService.save(request);
+	public ResponseEntity<User> register(@RequestBody User request) throws Exception {
+		User response = userService.register(request);
 		return new ResponseEntity<User>(response, HttpStatus.OK);
 	}
 }

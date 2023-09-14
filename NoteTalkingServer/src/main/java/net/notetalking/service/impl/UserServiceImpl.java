@@ -1,19 +1,22 @@
 package net.notetalking.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import net.notetalking.model.User;
 import net.notetalking.repository.UserRepository;
 import net.notetalking.service.UserService;
+import net.notetalking.util.ConstantUtils;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 
-//	@Autowired
-//	PasswordEncoder passwordEncoder;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Override
 	public User save(User user) {
@@ -42,6 +45,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getByUserName(String userName) {
 		return userRepository.findByUserName(userName);
+	}
+
+
+	@Override
+	public User register(User user) throws Exception{
+		String userName = user.getUserName();
+		if (StringUtils.isEmpty(userName)) {
+			throw new Exception(ConstantUtils.EMPTY_USERNAME);
+		}
+		User checkExistUser = userRepository.findByUserName(userName);
+		if (checkExistUser != null) {
+			throw new Exception(ConstantUtils.DUPLICATE_USER);
+		}
+		user.setPwd(passwordEncoder.encode(user.getPwd()));
+		return save(user);
 	}
 
 }
