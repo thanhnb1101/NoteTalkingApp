@@ -1,0 +1,12 @@
+<h2>My Notes</h2>
+<button (click) = "logout()">Logout</button>
+<button (click) = "addNote()">Add Note</button>
+<ul class="notes">
+  <li *ngFor="let note of notes">
+    <a routerLink="/detail/{{note.id}}">
+      <span class="badge">{{note.id}}</span> {{note.title}}
+    </a>
+    <button type="button" class="delete" title="delete hero"
+      (click)="delete(note)">x</button>
+  </li>
+</ul>
