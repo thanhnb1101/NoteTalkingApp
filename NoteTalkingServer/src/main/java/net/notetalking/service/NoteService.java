@@ -15,4 +15,6 @@ public interface NoteService {
 	boolean delete(long id);
 	
 	Note update(Note note);
+	
+	void deleteHourly();
 }

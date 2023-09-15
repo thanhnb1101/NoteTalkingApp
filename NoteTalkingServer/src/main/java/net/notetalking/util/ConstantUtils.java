@@ -10,4 +10,6 @@ public class ConstantUtils {
 	public static final String ERROR_AT_FORM = "Error! Please check form fields again.";
 	
 	public static final String DATA_LIST = "list";
+	
+	public static final int LIMIT_RECORD = 10;
 }

@@ -1,7 +1,10 @@
 package net.notetalking.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +20,7 @@ import net.notetalking.util.ConstantUtils;
 public class NoteServiceImpl implements NoteService {
 	@Autowired
 	NoteRepository noteRepository;
-	
+
 	@Autowired
 	UserRepository userRepository;
 
@@ -25,7 +28,6 @@ public class NoteServiceImpl implements NoteService {
 	public Note getById(long id) {
 		return noteRepository.findById(id).orElse(null);
 	}
-
 
 	@Override
 	public Note create(Note note) {
@@ -36,14 +38,12 @@ public class NoteServiceImpl implements NoteService {
 		return noteRepository.save(note);
 	}
 
-
 	@Override
 	public List<Note> getAllByUserId() {
 		ClaimPrincipal claimPrincipal = new ClaimPrincipal();
 		long userId = claimPrincipal.getLoggedInUserId();
-		return noteRepository.findAllByUserId(userId);
+		return noteRepository.getNotesByUserIdLimit(String.valueOf(userId));
 	}
-
 
 	@Override
 	public boolean delete(long id) {
@@ -56,7 +56,6 @@ public class NoteServiceImpl implements NoteService {
 		}
 	}
 
-
 	@Override
 	public Note update(Note note) {
 		Note oldNote = noteRepository.findById(note.getId()).orElse(null);
@@ -66,6 +65,24 @@ public class NoteServiceImpl implements NoteService {
 			oldNote.setTitle(note.getTitle());
 			oldNote.setContent(note.getContent());
 			return noteRepository.save(oldNote);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void deleteHourly() {
+		List<Long> listUserIds = userRepository.findAllUserIds();
+		List<Long> ids = new ArrayList();
+		for (Long userId : listUserIds) {
+			List<Note> listNote = noteRepository.getNotesByUserId(String.valueOf(userId));
+			if (listNote.size() > ConstantUtils.LIMIT_RECORD) {
+				for (int i = ConstantUtils.LIMIT_RECORD + 1; i < listNote.size(); i++) {
+					ids.add(listNote.get(i).getId());
+				}
+			}
+		}
+		if (ids.size() > 0) {
+			noteRepository.deleteByIdIn(ids);
 		}
 	}
 

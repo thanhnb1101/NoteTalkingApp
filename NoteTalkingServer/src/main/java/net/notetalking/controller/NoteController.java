@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.notetalking.model.Note;
 import net.notetalking.service.NoteService;
-import net.notetalking.util.Paging;
 
 @Controller
 @RequestMapping(value = "/note")
@@ -49,5 +47,11 @@ public class NoteController extends BaseController {
 	public ResponseEntity detail(@RequestParam long id) throws Exception {
 		Note response = noteService.getById(id);
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "/cron", method = RequestMethod.GET)
+	public void testDelExl10() {
+		noteService.deleteHourly();
 	}
 }
