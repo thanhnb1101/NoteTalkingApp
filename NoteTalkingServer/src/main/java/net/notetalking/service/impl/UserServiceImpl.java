@@ -1,26 +1,17 @@
 package net.notetalking.service.impl;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import net.notetalking.model.User;
 import net.notetalking.repository.UserRepository;
-import net.notetalking.security.CustomUserDetails;
 import net.notetalking.service.UserService;
 import net.notetalking.util.ConstantUtils;
 
 @Service("userService")
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 
@@ -37,22 +28,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userRepository.findById(id).orElse(null);
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUserName(username);
-		if (user == null) {
-			throw new UsernameNotFoundException("User not exists by Username");
-		}
-
-		Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
-
-//		return new org.springframework.security.core.userdetails.User(username, user.getPwd(), authorities);
-		return buildUserForAuthentication(user, authorities);
-	}
-
-	private UserDetails buildUserForAuthentication(User user, Set<GrantedAuthority> authorities) {
-		return new CustomUserDetails(user.getId(), user.getUserName(), user.getPwd(), authorities);
-	}
+//	@Override
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		User user = userRepository.findByUserName(username);
+//		if (user == null) {
+//			throw new UsernameNotFoundException("User not exists by Username");
+//		}
+//
+//		Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+//
+////		return new org.springframework.security.core.userdetails.User(username, user.getPwd(), authorities);
+//		return buildUserForAuthentication(user, authorities);
+//	}
+//
+//	private UserDetails buildUserForAuthentication(User user, Set<GrantedAuthority> authorities) {
+//		return new CustomUserDetails(user.getId(), user.getUserName(), user.getPwd(), authorities);
+//	}
+//	
+//	public UserDetails loadUserById(long userId) {
+//		User account = userRepository.findById(userId).orElse(null);
+//        if (account == null) {
+//            throw new UsernameNotFoundException("Not found user.");
+//        }
+//        Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+//
+//		return buildUserForAuthentication(account, authorities);
+//	}
 
 	@Override
 	public User getByUserName(String userName) {

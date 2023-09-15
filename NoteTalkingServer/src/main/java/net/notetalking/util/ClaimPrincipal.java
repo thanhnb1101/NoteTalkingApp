@@ -17,14 +17,4 @@ public class ClaimPrincipal {
 		return principal.toString();
 	}
 	
-	public Long getLoggedInUserId() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal instanceof UserDetails) {
-			return ((CustomUserDetails) principal).getUserId();
-		}
-
-		return null;
-	}
-
 }

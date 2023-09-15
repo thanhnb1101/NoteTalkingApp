@@ -1,30 +1,56 @@
 package net.notetalking.security;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.StringUtils;
-
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
-@Getter
-@Setter
-public class CustomUserDetails extends org.springframework.security.core.userdetails.User {
-	private static final long serialVersionUID = 1L;
-	private long userId;
-	private String userName;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-	public CustomUserDetails(long userId, String userName, String password, Collection<? extends GrantedAuthority> authorities) {
-		super(userName, password, authorities);
-		this.userId = userId;
-		this.userName = userName;
-	}
-	
-	public CustomUserDetails(long userId, String userName, Collection<? extends GrantedAuthority> authorities) {
-		super(userName, "", authorities);
-		this.userId = userId;
-		this.userName = userName;
-	}
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import net.notetalking.model.User;
+
+@Data
+@AllArgsConstructor
+public class CustomUserDetails implements UserDetails {
+
+	User account;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Mặc định mình sẽ để tất cả là ROLE_USER. Để demo cho đơn giản.
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return account.getPwd();
+    }
+
+    @Override
+    public String getUsername() {
+        return account.getUserName();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }
