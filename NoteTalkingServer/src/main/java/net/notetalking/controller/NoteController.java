@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,8 +27,8 @@ public class NoteController extends BaseController {
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public ResponseEntity delete(@RequestParam long id) {
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity delete(@PathVariable long id) {
 		return response(noteService.delete(id));
 	}
 
@@ -43,8 +44,8 @@ public class NoteController extends BaseController {
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public ResponseEntity detail(@RequestParam long id) throws Exception {
+	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+	public ResponseEntity detail(@PathVariable long id) throws Exception {
 		Note response = noteService.getById(id);
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
 	}

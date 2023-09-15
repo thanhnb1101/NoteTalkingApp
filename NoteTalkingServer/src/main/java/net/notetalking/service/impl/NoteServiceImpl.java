@@ -41,6 +41,7 @@ public class NoteServiceImpl implements NoteService {
 	public Note create(Note note) {
 		note.setUserId(getLoggedInUserId());
 		note.setDateCreated(new Date());
+		note.setId(null);
 		return noteRepository.save(note);
 	}
 
