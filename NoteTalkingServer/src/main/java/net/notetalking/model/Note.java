@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -31,6 +33,7 @@ public class Note {
 	private String title;
 	
 	@Column(name = "content")
+	@Type(type = "org.hibernate.type.TextType")
 	private String content;
 	
 	@Column(name = "dateCreated")
