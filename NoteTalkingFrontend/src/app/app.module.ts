@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpOptionUtilService } from './utils/http-option-util.service';
 import { NoteFormComponent } from './components/note-form/note-form.component';
+import { CustomValidators } from './utils/custom-validation';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NoteFormComponent } from './components/note-form/note-form.component';
     HttpClientModule
   ],
   providers: [
-    HttpOptionUtilService
+    HttpOptionUtilService,
+    CustomValidators
   ],
   bootstrap: [AppComponent]
 })
