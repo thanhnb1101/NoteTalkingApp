@@ -18,6 +18,7 @@
             <div *ngIf="frm.submitted && f.content.errors" class="invalid-feedback">
                 <div *ngIf="f.content.errors.required">Content can not be blank.</div>
                 <div *ngIf="f.content.errors.noteValidator">The notes will only allow [@, ; & * + -] special characters</div>
+                <div *ngIf="f.content.errors.maxlength">Max 500 characters!</div>
             </div>
         </div>
 

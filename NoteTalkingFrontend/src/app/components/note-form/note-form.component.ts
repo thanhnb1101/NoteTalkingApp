@@ -24,12 +24,12 @@ export class NoteFormComponent {
   createForm() {
     this.addNoteForm = new FormGroup({
       title: new FormControl('', [Validators.required, this.customValidators.noteValidator]),
-      content: new FormControl('', [Validators.required, this.customValidators.noteValidator])
+      content: new FormControl('', [Validators.required, this.customValidators.noteValidator, Validators.maxLength(500)])
     });
   }
 
   onSubmit() {
-    if (this.f.title.errors.required || this.f.title.errors.noteValidator || this.f.content.errors.required || this.f.content.errors.noteValidator) {
+    if (this.f.title.errors.required || this.f.title.errors.noteValidator || this.f.content.errors.required || this.f.content.errors.noteValidator || (this.f.content.errors.maxlength)) {
       console.log('addNoteForm invalid');
       console.log(this.addNoteForm.value);
       return;
